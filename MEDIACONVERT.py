@@ -70,7 +70,7 @@ def convert_video(
             output_folder,
             f"{os.path.splitext(os.path.basename(input_file))[0]}_{codec}.{output_format}",
         )
-        command = f'{quantum} -y -hide_banner -hwaccel cuda -i "{input_file}" -c:v {codec} -s {resolution} -c:a {audio_codec} -b:a {audio_bitrate} -filter:v fps=30 -ar 48000 "{output_file}"'
+        command = f'{quantum} -y -hide_banner -hwaccel auto -i "{input_file}" -c:v {codec} -s {resolution} -c:a {audio_codec} -b:a {audio_bitrate} -filter:v fps=30 -ar 48000 "{output_file}"'
         # [ -preset slow -preset ultrafast -b:v 5M ]
         duration = get_duration(input_file)
         start_time = time.time()
@@ -224,7 +224,7 @@ def convert_videos_to_audio(folder_path, audio_codec, audio_bitrate):
                     output_folder,
                     f"{os.path.splitext(os.path.basename(file))[0]}.{audio_codec}",
                 )
-                command = f'{quantum} -y -hide_banner -hwaccel cuda -i "{file_path}" -vn -c:a {audio_codec} -b:a {audio_bitrate} -ar 48000 "{output_file}" 2> NUL'
+                command = f'{quantum} -y -hide_banner -hwaccel auto -i "{file_path}" -vn -c:a {audio_codec} -b:a {audio_bitrate} -ar 48000 "{output_file}" 2> NUL'
                 subprocess.call(command, shell=True)
 
                 print(f"\nAUDIO: [{audio_number}] CONVERSION COMPLETED.")
@@ -456,6 +456,5 @@ while True:
         clear_console()
         print("INVALID OPTION. PLEASE ENTER 1, 2, OR 3.")
         continue
-
 
 
